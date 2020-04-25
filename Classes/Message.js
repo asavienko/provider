@@ -1,16 +1,9 @@
 function Message(creator, receiver, body) {
-  //
-  // # id: String
-  // # creator: String
-  // # receiver: String
-  // # body: String
-  // # type: MessageType
-
   this._id = generateUniqId();
   this._creator = creator;
   this._receiver = receiver;
   this._body = body;
-  this._type;
+  this._type = null;
 
   function generateUniqId() {
     return Math.floor(Math.random() * 1000000000);
