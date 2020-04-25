@@ -1,6 +1,6 @@
 function Provider() {
-  // - messageCache: ArrayOf(Message)
-  // - userList: ArrayOf(User)
+  this._messageCache = [];
+  this._userList = [];
 }
 
 Provider.prototype = {
