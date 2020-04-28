@@ -8,5 +8,5 @@ LowBalanceError.prototype = Object.create(Error.prototype);
 LowBalanceError.prototype.constructor = LowBalanceError;
 
 export default {
-  LowBalance: LowBalanceError
+  LowBalanceError: LowBalanceError
 };
