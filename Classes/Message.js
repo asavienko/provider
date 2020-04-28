@@ -1,14 +1,16 @@
 function Message(creator, receiver, body) {
-  this._id = generateUniqId();
+  this._id = getNextId();
   this._creator = creator;
   this._receiver = receiver;
   this._body = body;
   this._type = null;
-
-  function generateUniqId() {
-    return Math.floor(Math.random() * 1000000000);
-  }
 }
+
+Message.idCounter = 1000000000;
+
+Message.getNextId = function() {
+  return this.idCounter++;
+};
 
 Message.prototype = {
   constructor: Message,
