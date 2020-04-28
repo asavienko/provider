@@ -18,15 +18,19 @@ Message.prototype = {
   getCreator: function() {
     return this._creator;
   },
+
   getReceiver: function() {
     return this._receiver;
   },
+
   getBody: function() {
     return this._body;
   },
+
   getType: function() {
     return this._type;
   },
+
   setType: function(type) {
     this._type = type;
   }

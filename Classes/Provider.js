@@ -7,6 +7,66 @@ function Provider() {
 
 Provider.prototype = {
   constructor: Provider,
+
+  sendMessage: function(message) {
+    var type = this._chooseMessageType(message.body);
+    message.type = type;
+    var receiver = this._findUserById(message.receiver);
+
+    if (!receiver) return;
+
+    try {
+      receiver.withdraw(message.type.getPrice());
+    } catch (e) {
+      console.error(e);
+    }
+    this._messageCache.push(message);
+  },
+
+  receiveMessages: function(userId) {
+    return this._messageCache.filter(function(message) {
+      return message.getReciver() === userId;
+    });
+  },
+
+  addUser: function(user) {
+    this._userList.push(user);
+  },
+
+  deleteUser: function(userID) {
+    /* todo delete after review
+    var newUserList = this._userList.filter(function(user) {
+      return user.getUserId() !== userID;
+    });
+    this._userList = newUserList;
+*/
+
+    this._userList.some(function(user, index) {
+      if (user.getUserId() !== userID) {
+        return this._userList.splice(index, 1);
+      }
+    });
+  },
+
+  getUserBalance: function(userId) {
+    var currentUser = this._findUserById(userId);
+    return currentUser.getBalance();
+  },
+
+  _findUserById: function(userId) {
+    var foundUserArr = this._userList.filter(function(userFromList) {
+      userFromList.getUserId() === userId;
+    });
+    if (foundUserArr.length) {
+      return foundUserArr[0];
+    }
+  },
+
+  addUserBalance: function(userId, addBalance) {
+    var currentUser = this._findUserById(userId);
+    currentUser.addMoney(addBalance);
+  },
+
   _chooseMessageType: function(messageBody) {
     var length = messageBody.length;
     switch (true) {
@@ -17,52 +77,10 @@ Provider.prototype = {
       default:
         return new MessageType("large_message", 10);
     }
-  },
-  _findMessages: function(receiver) {
-    const foundMessages = this._messageCache.find(function(message) {
-      return message.receiver === receiver;
-    });
-    if (!foundMessages.length) throw new ThereAreAnyNewMessage(); //add error
-    return foundMessages;
-  },
-  _findUserById: function(userId) {
-    var foundUserArr = this._userList.find(function(userFromList) {
-      userFromList._getUserId() === userId;
-    });
-    if (!foundUserArr.length) throw new NotFoundReceiverError();
-    return foundUserArr[0];
-  },
-  sendMessage: function(message) {
-    var type = this._chooseMessageType(message.body);
-    message.type = type;
-    var receiver = this._findUserById(message.receiver);
-    receiver.withdraw(message.type.getPrice());
-    this._messageCache.push(message);
-  },
-  receiveMessages: function(userId) {
-    var foundMessages = this._findMessages(userId);
-    var newMessageCache = this._messageCache.filter(function(message) {
-      message.getReceiver() !== userId;
-    });
-    this._messageCache = newMessageCache;
-    return foundMessages;
-  },
-  addUser: function(user) {
-    if (!(user instanceof User)) throw new SendInstanceOfUserError(); //add error
-    this._messageCache.push(user);
-  },
-  deleteUser: function(userID) {
-    var newUserList = this._userList.filter(function(user) {
-      return user.getUserId() !== userID;
-    });
-    this._userList = newUserList;
-  },
-  getUserBalance: function(userId) {
-    var currentUser = this._findUserById(userId);
-    return currentUser.getBalance();
-  },
-  addBalance: function(userId, addBalance) {
-    var currentUser = this._findUserById(userId);
-    currentUser.addMoney(addBalance);
   }
 };
+
+//check all methods
+// remove exeptions
+// do not toch private method
+// call each method
