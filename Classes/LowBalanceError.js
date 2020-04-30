@@ -1,7 +1,6 @@
-function LowBalanceError() {
-  Error.call(this);
+function LowBalanceError(message) {
+  Error.call(this, message);
   this.name = "Balance Error";
-  this.message = "User have low balance";
 }
 
 LowBalanceError.prototype = Object.create(Error.prototype);

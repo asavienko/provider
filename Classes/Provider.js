@@ -1,32 +1,45 @@
 import MessageType from "./MessageType.js";
 
 function Provider() {
-  this._messageCache = [];
+  this._messageList = [];
   this._userList = [];
 }
 
 Provider.prototype = {
   constructor: Provider,
 
-  sendMessage: function(message) {
-    var type = this._chooseMessageType(message.body);
-    message.type = type;
-    var receiver = this._findUserById(message.receiver);
+  getMessageList: function() {
+    return this._messageList;
+  },
 
+  sendMessage: function(message) {
+    var receiver = this._findUserById(message.getReceiver());
     if (!receiver) return;
 
-    try {
-      receiver.withdraw(message.type.getPrice());
+    var type = this._chooseMessageType(message.getBody());
+    message.setType(type);
+
+    var messagePrice = type.getPrice();
+    if (receiver.getBalance() >= messagePrice) {
+      receiver.withdraw(messagePrice);
+      this._messageList.push(message);
+    }
+
+    /*    try {
+      receiver.withdraw(message.getType().getPrice());
     } catch (e) {
       console.error(e);
-    }
-    this._messageCache.push(message);
+    }*/
   },
 
   receiveMessages: function(userId) {
-    return this._messageCache.filter(function(message) {
+    return this._messageList.filter(function(message) {
       return message.getReciver() === userId;
     });
+  },
+
+  getUserList: function() {
+    return this._userList;
   },
 
   addUser: function(user) {
@@ -34,18 +47,24 @@ Provider.prototype = {
   },
 
   deleteUser: function(userID) {
-    /* todo delete after review
+    var currentUser = this._findUserById(userID);
+    currentUser &&
+      this._userList.splice(this._userList.indexOf(currentUser), 1);
+
+    /*
     var newUserList = this._userList.filter(function(user) {
       return user.getUserId() !== userID;
     });
     this._userList = newUserList;
-*/
+    */
 
+    /*
     this._userList.some(function(user, index) {
       if (user.getUserId() !== userID) {
         return this._userList.splice(index, 1);
       }
     });
+    */
   },
 
   getUserBalance: function(userId) {
@@ -53,18 +72,26 @@ Provider.prototype = {
     return currentUser.getBalance();
   },
 
+  addUserBalance: function(userId, addBalance) {
+    var currentUser = this._findUserById(userId);
+    currentUser.addMoney(addBalance);
+  },
+
   _findUserById: function(userId) {
-    var foundUserArr = this._userList.filter(function(userFromList) {
-      userFromList.getUserId() === userId;
+    for (var currentUser of this._userList) {
+      if (currentUser.getUserId() === userId) {
+        return currentUser;
+      }
+    }
+
+    /*   
+      var foundUserArr = this._userList.filter(function(userFromList) {
+      return userFromList.getUserId() === userId;
     });
     if (foundUserArr.length) {
       return foundUserArr[0];
     }
-  },
-
-  addUserBalance: function(userId, addBalance) {
-    var currentUser = this._findUserById(userId);
-    currentUser.addMoney(addBalance);
+    */
   },
 
   _chooseMessageType: function(messageBody) {
@@ -80,7 +107,4 @@ Provider.prototype = {
   }
 };
 
-//check all methods
-// remove exeptions
-// do not toch private method
-// call each method
+export default Provider;

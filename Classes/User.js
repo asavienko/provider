@@ -15,7 +15,9 @@ User.prototype = {
   },
 
   withdraw: function(money) {
-    if (money > this._balance) throw new LowBalanceError();
+    if (money > this._balance) {
+      throw new LowBalanceError("User has low balance");
+    }
     this._balance -= money;
   },
 

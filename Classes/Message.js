@@ -1,5 +1,5 @@
 function Message(creator, receiver, body) {
-  this._id = getNextId();
+  this._id = Message.getNextId();
   this._creator = creator;
   this._receiver = receiver;
   this._body = body;
@@ -8,8 +8,8 @@ function Message(creator, receiver, body) {
 
 Message.idCounter = 1000000000;
 
-Message.getNextId = function() {
-  return this.idCounter++;
+Message.getNextId = function getNextId() {
+  return Message.idCounter++;
 };
 
 Message.prototype = {
