@@ -5,6 +5,11 @@ function Provider() {
   this._userList = [];
 }
 
+Provider.randomDelay = function() {
+  var delay = Math.floor(Math.random() * 4 + 1) * 1000;
+  return delay;
+};
+
 Provider.prototype = {
   constructor: Provider,
 
@@ -12,24 +17,65 @@ Provider.prototype = {
     return this._messageList;
   },
 
-  sendMessage: function(message) {
-    var receiver = this._findUserById(message.getReceiver());
-    if (!receiver) return;
+  sendMessage: function(message, callback) {
+    function onTimoutFinish() {
+      var receiverFromMessage = message.getReceiver();
+      var receiver = this._findUserById(receiverFromMessage);
+      if (!receiver) {
+        callback &&
+          callback("User: " + receiverFromMessage + " - is not exist");
+        return;
+      }
+      var type = this._chooseMessageType(message.getBody());
+      message.setType(type);
 
-    var type = this._chooseMessageType(message.getBody());
-    message.setType(type);
+      var messagePrice = type.getPrice();
+      var creator = this._findUserById(message.getCreator());
 
-    var messagePrice = type.getPrice();
-    if (receiver.getBalance() >= messagePrice) {
-      receiver.withdraw(messagePrice);
+      if (creator.getBalance() < messagePrice) {
+        callback && callback("You have low balance: " + creator.getBalance());
+        return;
+      }
+      creator.withdraw(messagePrice);
       this._messageList.push(message);
+      callback && callback(null, creator.getBalance());
     }
+
+    setTimeout(onTimoutFinish.bind(this), Provider.randomDelay());
 
     /*    try {
       receiver.withdraw(message.getType().getPrice());
     } catch (e) {
       console.error(e);
     }*/
+  },
+
+  sendMessageSync: function() {
+    var self = this;
+    function sendMessagesArr(arr, callback) {
+      var ell = [].shift.call(arr);
+
+      if (ell) {
+        return function(err, balance) {
+          if (err) {
+            console.error(err);
+          }
+          if (balance) {
+            console.log(balance);
+          }
+          this.sendMessage(ell, sendMessagesArr(arr));
+        }.bind(self);
+      }
+      return function(err, balance) {
+        if (err) {
+          console.error(err);
+        }
+        if (balance) {
+          console.log(balance);
+        }
+      };
+    }
+    sendMessagesArr(arguments)();
   },
 
   receiveMessages: function(userId) {

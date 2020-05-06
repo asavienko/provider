@@ -7,38 +7,77 @@ var provider = new Provider();
 //add first user
 var user1 = new User("user1");
 provider.addUser(user1);
-provider.addUserBalance("user1", 100);
+provider.addUserBalance("user1", 10);
 
 //add second user
 var user2 = new User("user2");
 provider.addUser(user2);
-provider.addUserBalance("user2", 100);
+provider.addUserBalance("user2", 10);
 
 //create messages
-var message1 = new Message("user1", "user2", "1");
+var message1 = new Message("user1", "user2", "12345678901234567890123467890");
 var message2 = new Message("user2", "user1", "2");
 var message3 = new Message("user1", "user2", "3");
 
-//create random number from 2 to 4
-var randomNumber = Math.floor(Math.random() * 3 + 2);
-
-//create timout with callback
-function sendMessageTimeout(message, callback) {
-  setTimeout(function() {
-    provider.sendMessage(message);
-    console.log(provider);
-    callback && callback();
-  }, randomNumber * 1000);
+/*
+function sendMessages(message, callback) {
+  return function() {
+    provider.sendMessage(message, callback);
+  };
 }
 
-//create callback function to send messages synchronously
-function sendMessages() {
-  sendMessageTimeout(message1, function() {
-    sendMessageTimeout(message2, function() {
-      sendMessageTimeout(message3);
+sendMessages(message1, sendMessages(message2, sendMessages(message3)))();
+*/
+
+/*function callFunc(callback) {
+  if (callback) {
+    return `function() {
+    console.log(${callback});
+    callFunc;
+  }`;
+  }
+  callFunc();
+}
+
+[1, 2, 3].forEach(function(message) {
+  callFunc = callFunc(message);
+});*/
+
+/*
+provider.sendMessage(message1, function(err, balance) {
+  if (err) {
+    console.error(err);
+  }
+  if (balance) {
+    console.log(balance);
+  }
+  provider.sendMessage(message2, function(err, balance) {
+    if (err) {
+      console.error(err);
+    }
+    if (balance) {
+      console.log(balance);
+    }
+    provider.sendMessage(message3, function(err, balance) {
+      if (err) {
+        console.error(err);
+      }
+      if (balance) {
+        console.log(balance);
+      }
     });
   });
-}
+});
 
-// call function
-sendMessages();
+*/
+
+provider.sendMessageSync(
+  message1,
+  message2,
+  message3,
+  message1,
+  message3,
+  message1,
+  message3,
+  message1
+);
