@@ -1,11 +1,18 @@
-function LowBalanceError(message) {
-  Error.call(this, message);
-  this.name = "Balance Error";
+/*class LowBalanceError extends Error {
+  constructor(message) {
+    super(message);
+    this.name = "Balance Error";
+  }
+}*/
+
+class LowBalanceError extends Error {
+  constructor(message) {
+    super();
+    this.message = message;
+    this.name = "Balance Error";
+  }
 }
 
-LowBalanceError.prototype = Object.create(Error.prototype);
-LowBalanceError.prototype.constructor = LowBalanceError;
+throw new LowBalanceError("Some message about error");
 
-export default {
-  LowBalanceError: LowBalanceError
-};
+export default LowBalanceError;

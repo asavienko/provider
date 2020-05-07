@@ -1,39 +1,37 @@
-function Message(creator, receiver, body) {
-  this._id = Message.getNextId();
-  this._creator = creator;
-  this._receiver = receiver;
-  this._body = body;
-  this._type = null;
-}
+class Message {
+  constructor(creator, receiver, body) {
+    this._id = Message.getNextId();
+    this._creator = creator;
+    this._receiver = receiver;
+    this._body = body;
+    this._type = null;
+  }
 
-Message.idCounter = 1000000000;
+  static idCounter = 1000000000;
 
-Message.getNextId = function getNextId() {
-  return Message.idCounter++;
-};
+  static getNextId() {
+    return Message.idCounter++;
+  }
 
-Message.prototype = {
-  constructor: Message,
-
-  getCreator: function() {
+  get getCreator() {
     return this._creator;
-  },
+  }
 
-  getReceiver: function() {
+  get getReceiver() {
     return this._receiver;
-  },
+  }
 
-  getBody: function() {
+  get getBody() {
     return this._body;
-  },
+  }
 
-  getType: function() {
+  get getType() {
     return this._type;
-  },
+  }
 
-  setType: function(type) {
+  set setType(type) {
     this._type = type;
   }
-};
+}
 
 export default Message;

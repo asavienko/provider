@@ -1,29 +1,27 @@
-function User(userId) {
-  this._id = userId;
-  this._balance = 0;
-}
+import LowBalanceError from "./LowBalanceError.js";
 
-User.prototype = {
-  constructor: User,
-
-  getUserId: function() {
+class User {
+  constructor(userId) {
+    this._id = userId;
+    this._balance = 0;
+  }
+  get getUserId() {
     return this._id;
-  },
-
-  getBalance: function() {
+  }
+  get getBalance() {
     return this._balance;
-  },
+  }
 
-  withdraw: function(money) {
+  withdraw(money) {
     if (money > this._balance) {
       throw new LowBalanceError("User has low balance");
     }
     this._balance -= money;
-  },
+  }
 
-  addMoney: function(money) {
+  addMoney(money) {
     if (money > 0) this._balance += money;
   }
-};
+}
 
 export default User;
