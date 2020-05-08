@@ -3,19 +3,19 @@ class MessageType {
     this._name = name;
     this._price = price;
   }
-  get getName() {
+  get name() {
     return this._name;
   }
 
-  set setName(name) {
+  set name(name) {
     this._name = name;
   }
 
-  get getPrice() {
+  get price() {
     return this._price;
   }
 
-  set setPrice(price) {
+  set price(price) {
     this._price = price;
   }
 }

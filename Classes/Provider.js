@@ -10,35 +10,35 @@ class Provider {
     return Math.floor(Math.random() * 4 + 1) * 1000;
   }
 
-  get getMessageList() {
+  get messageList() {
     return this._messageList;
   }
 
   sendMessage(message) {
     return new Promise((resolve, reject) =>
       setTimeout(() => {
-        const receiver = this._findUserById(message.getReceiver);
+        const receiver = this._findUserById(message.receiver);
 
         if (!receiver) {
-          reject("User: " + message.getReceiver + " - is not exist");
+          reject("User: " + message.receiver + " - is not exist");
           return;
         }
 
-        const type = this._chooseMessageType(message.getBody);
-        message.setType = type;
+        const type = this._chooseMessageType(message.body);
+        message.type = type;
 
-        const messagePrice = type.getPrice;
+        const messagePrice = type.price;
 
-        const creator = this._findUserById(message.getCreator);
+        const creator = this._findUserById(message.creator);
 
-        if (!creator || creator.getBalance < messagePrice) {
-          reject("You have low balance: " + creator.getBalance);
+        if (!creator || creator.balance < messagePrice) {
+          reject("You have low balance: " + creator.balance);
           return;
         }
 
         creator.withdraw(messagePrice);
         this._messageList.push(message);
-        resolve(creator.getBalance);
+        resolve(creator.balance);
       }, Provider.randomDelay())
     );
   }
@@ -49,7 +49,7 @@ class Provider {
     });
   }
 
-  get getUserList() {
+  get userList() {
     return this._userList;
   }
 
@@ -65,7 +65,7 @@ class Provider {
 
   getUserBalance(userId) {
     const currentUser = this._findUserById(userId);
-    return currentUser.getBalance;
+    return currentUser.balance;
   }
 
   addUserBalance(userId, addBalance) {
@@ -75,7 +75,7 @@ class Provider {
 
   _findUserById(userId) {
     return this._userList.find(
-      userFromList => userFromList.getUserId === userId
+      userFromList => userFromList.id === userId
     );
   }
 

@@ -19,6 +19,7 @@ provider.addUserBalance("user2", 10);
 const message1 = new Message("user1", "user2", "12345678901234567890123467890");
 const message2 = new Message("user2", "user1", "2");
 const message3 = new Message("user1", "user2", "3");
+/*
 
 (async () => {
   try {
@@ -42,3 +43,22 @@ const message3 = new Message("user1", "user2", "3");
     console.log("function execution has finished");
   }
 })();
+*/
+
+const showResponseSendMessage = message => response => {
+  console.log(response);
+  return provider.sendMessage(message);
+};
+
+provider
+  .sendMessage(message2)
+  .then(showResponseSendMessage(message1))
+  .then(showResponseSendMessage(message3))
+  .then(showResponseSendMessage(message1))
+  .then(showResponseSendMessage(message1))
+  .then(showResponseSendMessage(message1))
+  .then(showResponseSendMessage(message2))
+  .then(showResponseSendMessage(message1))
+  .then(showResponseSendMessage(message1))
+  .catch(err => console.error(err))
+  .finally(() => console.log("function execution has finished"));

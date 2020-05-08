@@ -5,10 +5,10 @@ class User {
     this._id = userId;
     this._balance = 0;
   }
-  get getUserId() {
+  get id() {
     return this._id;
   }
-  get getBalance() {
+  get balance() {
     return this._balance;
   }
 

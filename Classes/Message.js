@@ -13,23 +13,23 @@ class Message {
     return Message.idCounter++;
   }
 
-  get getCreator() {
+  get creator() {
     return this._creator;
   }
 
-  get getReceiver() {
+  get receiver() {
     return this._receiver;
   }
 
-  get getBody() {
+  get body() {
     return this._body;
   }
 
-  get getType() {
+  get type() {
     return this._type;
   }
 
-  set setType(type) {
+  set type(type) {
     this._type = type;
   }
 }
