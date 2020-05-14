@@ -1,94 +1,7 @@
-/*
-import User from "./Classes/User.js";
-import Message from "./Classes/Message.js";
-import Provider from "./Classes/Provider.js";
-
-const provider = new Provider();
-
-//add first user
-const user1 = new User("user1");
-
-provider.addUser(user1);
-provider.addUserBalance("user1", 10);
-
-//add second user
-const user2 = new User("user2");
-provider.addUser(user2);
-provider.addUserBalance("user2", 10);
-
-//create messages
-const message1: Message = new Message(
-  "user1",
-  "user2",
-  "12345678901234567890123467890"
-);
-const message2: Message = new Message("user2", "user1", "2");
-const message3: Message = new Message("user1", "user2", "3");
-
-(async () => {
-  try {
-    const response1 = await provider.sendMessage(message1);
-    console.log(response1);
-    const response2 = await provider.sendMessage(message2);
-    console.log(response2);
-    const response3 = await provider.sendMessage(message3);
-    console.log(response3);
-    const response4 = await provider.sendMessage(message1);
-    console.log(response4);
-    const response5 = await provider.sendMessage(message1);
-    console.log(response5);
-    const response6 = await provider.sendMessage(message1);
-    console.log(response6);
-    const response7 = await provider.sendMessage(message1);
-    console.log(response7);
-  } catch (e) {
-    console.error(e);
-  } finally {
-    console.log("function execution has finished");
-  }
-})();
-
-const showResponseSendMessage = message => response => {
-  console.log(response);
-  return provider.sendMessage(message);
-};
-
-provider
-  .sendMessage(message2)
-  .then(showResponseSendMessage(message1))
-  .then(showResponseSendMessage(message3))
-  .then(showResponseSendMessage(message1))
-  .then(showResponseSendMessage(message1))
-  .then(showResponseSendMessage(message1))
-  .then(showResponseSendMessage(message2))
-  .then(showResponseSendMessage(message1))
-  .then(showResponseSendMessage(message1))
-  .catch(err => console.error(err))
-  .finally(() => console.log("function execution has finished"));
-
-function greeter(message: Message): string {
-  return `Hello, ${message.receiver}! <br/>
-You have new message: <br/>
-${message.body};`;
-}
-
-let user = new Student("Jane", "M.", "User");
-
-document.body.innerHTML = greeter(message1);
-*/
-
-
-
-
-
-
-
-
-
-// Generic programming is a style of computer programming in which
-// algorithms are written in terms of types to-be-specified-later
-// that are then instantiated when needed for specific types
-// provided as parameters.
+//todo Generic programming is a style of computer programming in which
+//     algorithms are written in terms of types to-be-specified-later
+//     that are then instantiated when needed for specific types
+//     provided as parameters.
 
 
 
@@ -106,8 +19,8 @@ document.body.innerHTML = greeter(message1);
 
 
 
-//Generics are a powerful tool to write dynamic code,
-//and flexible code
+//todo Generics are a powerful tool to write dynamic code,
+//     and flexible code
 
 
 
@@ -131,7 +44,7 @@ document.body.innerHTML = greeter(message1);
 
 
 
-// Simple Generic
+//todo Simple Generic
 
 
 
@@ -161,7 +74,7 @@ console.log(echo({ a: "test", age: 27 })); //.length
 
 
 
-// How to force compiler check types?
+//todo How to force compiler check types?
 
 
 
@@ -318,12 +231,12 @@ console.log(calculator.multiple());
 
 
 
+//todo Generics give us flexibility combined with type safety
 
 
 
 
-
-//As for me, the most useFull generic is Promise
+//todo As for me, the most useFull generic is Promise
 
 /*
 
@@ -391,7 +304,7 @@ let message = "No value";
 
 
 
-//todo Generics give us flexibility combined with type safety
+
 
 
 
