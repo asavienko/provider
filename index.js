@@ -1,24 +1,21 @@
-import User from "./Classes/User.js";
-import Message from "./Classes/Message.js";
-import Provider from "./Classes/Provider.js";
-
-const provider = new Provider();
-
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var User_js_1 = require("./Classes/User.js");
+var Message_js_1 = require("./Classes/Message.js");
+var Provider_js_1 = require("./Classes/Provider.js");
+var provider = new Provider_js_1.default();
 //add first user
-const user1 = new User("user1");
-
+var user1 = new User_js_1.default("user1");
 provider.addUser(user1);
 provider.addUserBalance("user1", 10);
-
 //add second user
-const user2 = new User("user2");
+var user2 = new User_js_1.default("user2");
 provider.addUser(user2);
 provider.addUserBalance("user2", 10);
-
 //create messages
-const message1 = new Message("user1", "user2", "12345678901234567890123467890");
-const message2 = new Message("user2", "user1", "2");
-const message3 = new Message("user1", "user2", "3");
+var message1 = new Message_js_1.default("user1", "user2", "12345678901234567890123467890");
+var message2 = new Message_js_1.default("user2", "user1", "2");
+var message3 = new Message_js_1.default("user1", "user2", "3");
 /*
 
 (async () => {
@@ -44,21 +41,24 @@ const message3 = new Message("user1", "user2", "3");
   }
 })();
 */
-
-const showResponseSendMessage = message => response => {
-  console.log(response);
-  return provider.sendMessage(message);
-};
-
+var showResponseSendMessage = function (message) { return function (response) {
+    console.log(response);
+    return provider.sendMessage(message);
+}; };
 provider
-  .sendMessage(message2)
-  .then(showResponseSendMessage(message1))
-  .then(showResponseSendMessage(message3))
-  .then(showResponseSendMessage(message1))
-  .then(showResponseSendMessage(message1))
-  .then(showResponseSendMessage(message1))
-  .then(showResponseSendMessage(message2))
-  .then(showResponseSendMessage(message1))
-  .then(showResponseSendMessage(message1))
-  .catch(err => console.error(err))
-  .finally(() => console.log("function execution has finished"));
+    .sendMessage(message2)
+    .then(showResponseSendMessage(message1))
+    .then(showResponseSendMessage(message3))
+    .then(showResponseSendMessage(message1))
+    .then(showResponseSendMessage(message1))
+    .then(showResponseSendMessage(message1))
+    .then(showResponseSendMessage(message2))
+    .then(showResponseSendMessage(message1))
+    .then(showResponseSendMessage(message1))
+    .catch(function (err) { return console.error(err); })
+    .finally(function () { return console.log("function execution has finished"); });
+function greeter(message) {
+    return "Hello, " + message.receiver + " " + message.body;
+}
+// let user = new Student("Jane", "M.", "User");
+document.body.textContent = greeter(message1);
