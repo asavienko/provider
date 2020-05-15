@@ -1,6 +1,7 @@
 import User from "./Classes/User.js";
 import Message from "./Classes/Message.js";
 import Provider from "./Classes/Provider.js";
+import { IMessagable, IUserable } from "./Classes/interfaces";
 
 const user1 = new User("Bob");
 console.log(user1);
@@ -21,7 +22,7 @@ console.log(message2);
 const message3 = new Message("Bob", "unknownUser", "Some Body");
 console.log(message3);
 
-const provider = new Provider();
+const provider = new Provider<IMessagable, IUserable>();
 
 provider.addUser(user1);
 provider.addUser(user2);
@@ -35,7 +36,7 @@ console.log(provider.getUserBalance("Bob"));
     console.log(response1);
     await provider.sendMessage(message3);
   } catch (e) {
-    console.log(e);
+    console.error(e);
   }
   console.log(provider.receiveMessages("newUser"));
 })();

@@ -1,25 +1,37 @@
 import MessageType from "./MessageType.js";
 import List from "./List.js";
-import { IMessagable, IUserable } from "./interfaces";
+import { IListable, IMessagable, IUserable } from "./interfaces";
 
-class Provider {
-  private _messageList: List<IMessagable>;
-  private _userList: List<IUserable>;
+class Provider<T extends IMessagable, U extends IUserable> {
+  private _messageList: IListable<T>;
+  private _userList: IListable<U>;
   constructor() {
-    this._messageList = new List<IMessagable>();
-    this._userList = new List<IUserable>();
+    this._messageList = new List<T>();
+    this._userList = new List<U>();
   }
 
   static randomDelay() {
     return Math.floor(Math.random() * 4 + 1) * 1000;
   }
 
+  static chooseMessageType(messageBody: string) {
+    const length = messageBody.length;
+    switch (true) {
+      case length < 10:
+        return new MessageType("small_message", 1);
+      case length < 50:
+        return new MessageType("medium_message", 2);
+      default:
+        return new MessageType("large_message", 10);
+    }
+  }
+
   get messageList() {
     return this._messageList.toArray();
   }
 
-  sendMessage(message: IMessagable) {
-    return new Promise<string | number>((resolve, reject) =>
+  sendMessage(message: T) {
+    return new Promise<number>((resolve, reject) =>
       setTimeout(() => {
         const receiver = this._userList.getById(message.receiver);
 
@@ -28,7 +40,7 @@ class Provider {
           return;
         }
 
-        const type = this._chooseMessageType(message.body);
+        const type = Provider.chooseMessageType(message.body);
         message.type = type;
 
         const messagePrice = type.price;
@@ -57,7 +69,7 @@ class Provider {
     return this._userList.toArray();
   }
 
-  addUser(user: IUserable) {
+  addUser(user: U) {
     this._userList.add(user);
   }
 
@@ -73,18 +85,6 @@ class Provider {
   userPayment(userId: string, money: number) {
     const currentUser = this._userList.getById(userId);
     currentUser.payment(money);
-  }
-
-  private _chooseMessageType(messageBody: string) {
-    const length = messageBody.length;
-    switch (true) {
-      case length < 10:
-        return new MessageType("small_message", 1);
-      case length < 50:
-        return new MessageType("medium_message", 2);
-      default:
-        return new MessageType("large_message", 10);
-    }
   }
 }
 

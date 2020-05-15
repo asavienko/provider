@@ -3,7 +3,8 @@
     "outDir": "./built",
     "allowJs": true,
     "target": "es6",
-    "module": "es2015"
+    "module": "es2015",
+    "baseUrl": "./"
   },
   "include": ["./*", "./Classes/*"],
   "exclude": ["node_modules"]

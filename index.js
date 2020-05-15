@@ -1,64 +1,41 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-var User_js_1 = require("./Classes/User.js");
-var Message_js_1 = require("./Classes/Message.js");
-var Provider_js_1 = require("./Classes/Provider.js");
-var provider = new Provider_js_1.default();
-//add first user
-var user1 = new User_js_1.default("user1");
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+import User from "./Classes/User.js";
+import Message from "./Classes/Message.js";
+import Provider from "./Classes/Provider.js";
+const user1 = new User("Bob");
+console.log(user1);
+const user2 = new User("newUser");
+console.log(user2);
+const message1 = new Message("Bob", "newUser", "some body");
+console.log(message1);
+const message2 = new Message("newUser", "Bob", "some loooooong body. some loooooong body. some loooooong body. some loooooong body. ");
+console.log(message2);
+const message3 = new Message("Bob", "unknownUser", "Some Body");
+console.log(message3);
+const provider = new Provider();
 provider.addUser(user1);
-provider.addUserBalance("user1", 10);
-//add second user
-var user2 = new User_js_1.default("user2");
 provider.addUser(user2);
-provider.addUserBalance("user2", 10);
-//create messages
-var message1 = new Message_js_1.default("user1", "user2", "12345678901234567890123467890");
-var message2 = new Message_js_1.default("user2", "user1", "2");
-var message3 = new Message_js_1.default("user1", "user2", "3");
-/*
-
-(async () => {
-  try {
-    const response1 = await provider.sendMessage(message1);
-    console.log(response1);
-    const response2 = await provider.sendMessage(message2);
-    console.log(response2);
-    const response3 = await provider.sendMessage(message3);
-    console.log(response3);
-    const response4 = await provider.sendMessage(message1);
-    console.log(response4);
-    const response5 = await provider.sendMessage(message1);
-    console.log(response5);
-    const response6 = await provider.sendMessage(message1);
-    console.log(response6);
-    const response7 = await provider.sendMessage(message1);
-    console.log(response7);
-  } catch (e) {
-    console.error(e);
-  } finally {
-    console.log("function execution has finished");
-  }
-})();
-*/
-var showResponseSendMessage = function (message) { return function (response) {
-    console.log(response);
-    return provider.sendMessage(message);
-}; };
-provider
-    .sendMessage(message2)
-    .then(showResponseSendMessage(message1))
-    .then(showResponseSendMessage(message3))
-    .then(showResponseSendMessage(message1))
-    .then(showResponseSendMessage(message1))
-    .then(showResponseSendMessage(message1))
-    .then(showResponseSendMessage(message2))
-    .then(showResponseSendMessage(message1))
-    .then(showResponseSendMessage(message1))
-    .catch(function (err) { return console.error(err); })
-    .finally(function () { return console.log("function execution has finished"); });
-function greeter(message) {
-    return "Hello, " + message.receiver + " " + message.body;
-}
-// let user = new Student("Jane", "M.", "User");
-document.body.textContent = greeter(message1);
+provider.userPayment("Bob", 10);
+console.log(provider.getUserBalance("Bob"));
+(() => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const response1 = yield provider.sendMessage(message1);
+        console.log(response1);
+        yield provider.sendMessage(message3);
+    }
+    catch (e) {
+        console.error(e);
+    }
+    console.log(provider.receiveMessages("newUser"));
+}))();
+console.log(provider.messageList);
+console.log(provider.userList);
+console.log(provider.getUserBalance("Bob"));

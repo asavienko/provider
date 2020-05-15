@@ -24,9 +24,9 @@ class List<T extends { id: string | number }> implements IListable<T> {
   remove(index: number): void {
     this.list.splice(index, 1);
   }
-  removeById(id: string): void {
+  removeById(id: string | number): void {
     const index = this.list.findIndex(item => item.id === id);
-    this.list.splice(index, 1);
+    index !== -1 && this.list.splice(index, 1);
   }
 }
 
