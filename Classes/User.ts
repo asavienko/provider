@@ -1,7 +1,10 @@
 import LowBalanceError from "./LowBalanceError.js";
+import { IUserable } from "./interfaces";
 
-class User {
-  constructor(userId) {
+class User implements IUserable {
+  protected _id: string;
+  protected _balance: number;
+  constructor(userId: string) {
     this._id = userId;
     this._balance = 0;
   }
@@ -12,14 +15,14 @@ class User {
     return this._balance;
   }
 
-  withdraw(money) {
+  withdraw(money: number) {
     if (money > this._balance) {
       throw new LowBalanceError("User has low balance");
     }
     this._balance -= money;
   }
 
-  addMoney(money) {
+  payment(money: number) {
     if (money > 0) this._balance += money;
   }
 }

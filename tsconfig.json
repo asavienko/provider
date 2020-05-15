@@ -2,8 +2,9 @@
   "compilerOptions": {
     "outDir": "./built",
     "allowJs": true,
-    "target": "es5",
+    "target": "es6",
     "module": "es2015"
   },
-  "include": ["./*"]
+  "include": ["./*", "./Classes/*"],
+  "exclude": ["node_modules"]
 }

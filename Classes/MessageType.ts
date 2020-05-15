@@ -1,5 +1,9 @@
-class MessageType {
-  constructor(name, price) {
+import {IMessageTypable} from "./interfaces";
+
+class MessageType implements IMessageTypable{
+  protected _name: string;
+  protected _price: number;
+  constructor(name: string, price: number) {
     this._name = name;
     this._price = price;
   }

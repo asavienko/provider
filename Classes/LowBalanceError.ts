@@ -1,5 +1,6 @@
 class LowBalanceError extends Error {
-  constructor(message) {
+  public message: string;
+  constructor(message: string) {
     super(message);
     this.name = "Balance Error";
   }
