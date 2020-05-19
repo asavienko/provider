@@ -1,6 +1,6 @@
 import { IListable } from "./interfaces";
 
-class List<T extends { id: string | number }> implements IListable<T> {
+class List<T extends { getId(): string | number }> implements IListable<T> {
   private list: T[] = [];
   add(item: T): void {
     this.list.push(item);
@@ -9,7 +9,7 @@ class List<T extends { id: string | number }> implements IListable<T> {
     return this.list[index] || null;
   }
   getById(id: string): T | null {
-    const result: T = this.list.find((item: T) => item.id === id);
+    const result: T = this.list.find((item: T) => item.getId() === id);
     return result || null;
   }
   toArray(): T[] {
@@ -25,7 +25,7 @@ class List<T extends { id: string | number }> implements IListable<T> {
     this.list.splice(index, 1);
   }
   removeById(id: string | number): void {
-    const index = this.list.findIndex(item => item.id === id);
+    const index = this.list.findIndex(item => item.getId() === id);
     index !== -1 && this.list.splice(index, 1);
   }
 }

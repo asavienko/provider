@@ -1,25 +1,26 @@
-import {IMessageTypable} from "./interfaces";
+import { IMessageTypable } from "./interfaces";
 
-class MessageType implements IMessageTypable{
+class MessageType implements IMessageTypable {
   protected _name: string;
   protected _price: number;
   constructor(name: string, price: number) {
     this._name = name;
     this._price = price;
   }
-  get name() {
+
+  getName() {
     return this._name;
   }
 
-  set name(name) {
+  setName(name) {
     this._name = name;
   }
 
-  get price() {
+  getPrice() {
     return this._price;
   }
 
-  set price(price) {
+  setPrice(price) {
     this._price = price;
   }
 }

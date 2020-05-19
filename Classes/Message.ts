@@ -8,37 +8,38 @@ class Message implements IMessagable {
   protected _type: IMessageTypable;
 
   constructor(creator: string, receiver: string, body: string) {
-    this._id = Message.getNextId();
+    this._id = this.getNextId();
     this._creator = creator;
     this._receiver = receiver;
     this._body = body;
     this._type = null;
   }
-  static _idCounter: number = 10 ** 6;
-  static getNextId() {
+  private _idCounter: number = 10 ** 6;
+  private getNextId() {
     return this._idCounter++;
   }
-  get id() {
+
+  getId() {
     return this._id;
   }
 
-  get creator() {
+  getCreator() {
     return this._creator;
   }
 
-  get receiver() {
+  getReceiver() {
     return this._receiver;
   }
 
-  get body() {
+  getBody() {
     return this._body;
   }
 
-  get type() {
+  getType() {
     return this._type;
   }
 
-  set type(type) {
+  setType(type) {
     this._type = type;
   }
 }

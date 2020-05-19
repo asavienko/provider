@@ -1,19 +1,22 @@
 export interface IMessagable {
-  readonly id: number;
-  readonly creator: string;
-  readonly receiver: string;
-  readonly body: string;
-  type: IMessageTypable;
+  getId(): number;
+  getCreator(): string;
+  getReceiver(): string;
+  getBody(): string;
+  getType(): IMessageTypable;
+  setType(type: IMessageTypable): void;
 }
 
 export interface IMessageTypable {
-  name: string;
-  price: number;
+  getName(): string;
+  setName(name: string): void;
+  getPrice(): number;
+  setPrice(price: number): void;
 }
 
 export interface IUserable {
-  readonly id: string;
-  readonly balance: number;
+  getId(): string;
+  getBalance(): number;
   withdraw(money: number): void;
   payment(money: number): void;
 }

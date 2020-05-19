@@ -8,10 +8,10 @@ class User implements IUserable {
     this._id = userId;
     this._balance = 0;
   }
-  get id() {
+  getId() {
     return this._id;
   }
-  get balance() {
+  getBalance() {
     return this._balance;
   }
 

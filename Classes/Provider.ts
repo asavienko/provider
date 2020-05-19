@@ -1,13 +1,16 @@
 import MessageType from "./MessageType.js";
-import List from "./List.js";
+
 import { IListable, IMessagable, IUserable } from "./interfaces";
 
-class Provider<T extends IMessagable, U extends IUserable> {
-  private _messageList: IListable<T>;
-  private _userList: IListable<U>;
-  constructor() {
-    this._messageList = new List<T>();
-    this._userList = new List<U>();
+class Provider {
+  private _messageList: IListable<IMessagable>;
+  private _userList: IListable<IUserable>;
+  constructor(
+    messageList: IListable<IMessagable>,
+    userList: IListable<IUserable>
+  ) {
+    this._messageList = messageList;
+    this._userList = userList;
   }
 
   static randomDelay() {
@@ -26,50 +29,50 @@ class Provider<T extends IMessagable, U extends IUserable> {
     }
   }
 
-  get messageList() {
+  getMessageList() {
     return this._messageList.toArray();
   }
 
-  sendMessage(message: T) {
+  sendMessage(message: IMessagable) {
     return new Promise<number>((resolve, reject) =>
       setTimeout(() => {
-        const receiver = this._userList.getById(message.receiver);
+        const receiver = this._userList.getById(message.getReceiver());
 
         if (!receiver) {
-          reject("User: " + message.receiver + " - is not exist");
+          reject("User: " + message.getReceiver() + " - is not exist");
           return;
         }
 
-        const type = Provider.chooseMessageType(message.body);
-        message.type = type;
+        const type = Provider.chooseMessageType(message.getBody());
+        message.setType(type);
 
-        const messagePrice = type.price;
+        const messagePrice = type.getPrice();
 
-        const creator = this._userList.getById(message.creator);
+        const creator = this._userList.getById(message.getCreator());
 
-        if (!creator || creator.balance < messagePrice) {
-          reject("You have low balance: " + creator.balance);
+        if (!creator || creator.getBalance() < messagePrice) {
+          reject("You have low balance: " + creator.getBalance());
           return;
         }
 
         creator.withdraw(messagePrice);
         this._messageList.add(message);
-        resolve(creator.balance);
+        resolve(creator.getBalance());
       }, Provider.randomDelay())
     );
   }
 
   receiveMessages(userId: string) {
     return this._messageList.toArray().filter(message => {
-      return message.receiver === userId;
+      return message.getReceiver() === userId;
     });
   }
 
-  get userList() {
+  getUserList() {
     return this._userList.toArray();
   }
 
-  addUser(user: U) {
+  addUser(user: IUserable) {
     this._userList.add(user);
   }
 
@@ -79,7 +82,7 @@ class Provider<T extends IMessagable, U extends IUserable> {
 
   getUserBalance(userId: string) {
     const currentUser = this._userList.getById(userId);
-    return currentUser.balance;
+    return currentUser.getBalance();
   }
 
   userPayment(userId: string, money: number) {
