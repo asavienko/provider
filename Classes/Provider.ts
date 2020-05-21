@@ -5,6 +5,7 @@ import { IListable, IMessagable, IUserable } from "./interfaces";
 class Provider {
   private _messageList: IListable<IMessagable>;
   private _userList: IListable<IUserable>;
+
   constructor(
     messageList: IListable<IMessagable>,
     userList: IListable<IUserable>
@@ -18,7 +19,7 @@ class Provider {
   }
 
   static chooseMessageType(messageBody: string) {
-    const length = messageBody.length;
+    const length = messageBody.length; //делегирование против наследования
     switch (true) {
       case length < 10:
         return new MessageType("small_message", 1);
@@ -29,11 +30,11 @@ class Provider {
     }
   }
 
-  getMessageList() {
+  public getMessageList(): IMessagable[] {
     return this._messageList.toArray();
   }
 
-  sendMessage(message: IMessagable) {
+  public sendMessage(message: IMessagable): Promise<number> {
     return new Promise<number>((resolve, reject) =>
       setTimeout(() => {
         const receiver = this._userList.getById(message.getReceiver());
@@ -62,30 +63,30 @@ class Provider {
     );
   }
 
-  receiveMessages(userId: string) {
+  public receiveMessages(userId: string): IMessagable[] {
     return this._messageList.toArray().filter(message => {
       return message.getReceiver() === userId;
     });
   }
 
-  getUserList() {
+  public getUserList(): IUserable[] {
     return this._userList.toArray();
   }
 
-  addUser(user: IUserable) {
+  public addUser(user: IUserable): void {
     this._userList.add(user);
   }
 
-  deleteUser(userID: string) {
+  public deleteUser(userID: string): void {
     this._userList.removeById(userID);
   }
 
-  getUserBalance(userId: string) {
+  public getUserBalance(userId: string): number {
     const currentUser = this._userList.getById(userId);
     return currentUser.getBalance();
   }
 
-  userPayment(userId: string, money: number) {
+  public userPayment(userId: string, money: number): void {
     const currentUser = this._userList.getById(userId);
     currentUser.payment(money);
   }

@@ -8,19 +8,19 @@ class MessageType implements IMessageTypable {
     this._price = price;
   }
 
-  getName() {
+  public getName(): string {
     return this._name;
   }
 
-  setName(name) {
+  public setName(name: string): void {
     this._name = name;
   }
 
-  getPrice() {
+  public getPrice(): number {
     return this._price;
   }
 
-  setPrice(price) {
+  public setPrice(price: number): void {
     this._price = price;
   }
 }

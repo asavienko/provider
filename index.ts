@@ -3,6 +3,7 @@ import Message from "./Classes/Message.js";
 import Provider from "./Classes/Provider.js";
 import { IMessagable, IUserable } from "./Classes/interfaces";
 import List from "./Classes/List.js";
+import { MessageTypeName } from "./Classes/constants.js";
 
 const user1 = new User("Bob");
 console.log(user1);
@@ -45,3 +46,5 @@ console.log(provider.getUserBalance("Bob"));
 console.log(provider.getMessageList());
 console.log(provider.getUserList());
 console.log(provider.getUserBalance("Bob"));
+
+console.log(MessageTypeName[0]);
