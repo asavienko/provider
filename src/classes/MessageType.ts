@@ -1,18 +1,19 @@
-import { IMessageTypable } from "./interfaces";
+import { MessageTypeName } from "../constants/MessageTypeName";
+import IMessageTypable from "../interfaces/IMessageTypable";
 
 class MessageType implements IMessageTypable {
-  protected _name: string;
+  protected _name: MessageTypeName;
   protected _price: number;
-  constructor(name: string, price: number) {
+  constructor(name: MessageTypeName, price: number) {
     this._name = name;
     this._price = price;
   }
 
-  public getName(): string {
+  public getName(): MessageTypeName {
     return this._name;
   }
 
-  public setName(name: string): void {
+  public setName(name: MessageTypeName): void {
     this._name = name;
   }
 

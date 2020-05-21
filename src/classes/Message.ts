@@ -1,4 +1,5 @@
-import { IMessagable, IMessageTypable } from "./interfaces";
+import IMessagable from "../interfaces/IMessagable";
+import IMessageTypable from "../interfaces/IMessageTypable";
 
 class Message implements IMessagable {
   protected _id: number;

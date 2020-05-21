@@ -1,6 +1,10 @@
 import MessageType from "./MessageType.js";
 
-import { IListable, IMessagable, IUserable } from "./interfaces";
+import { MessageTypeName } from "../constants/MessageTypeName.js";
+import IMessagable from "../interfaces/IMessagable";
+import IListable from "../interfaces/IListable";
+import IUserable from "../interfaces/IUserable";
+import IMessageTypable from "../interfaces/IMessageTypable";
 
 class Provider {
   private _messageList: IListable<IMessagable>;
@@ -18,15 +22,15 @@ class Provider {
     return Math.floor(Math.random() * 4 + 1) * 1000;
   }
 
-  static chooseMessageType(messageBody: string) {
-    const length = messageBody.length; //делегирование против наследования
+  static chooseMessageType(messageBody: string): IMessageTypable {
+    const length = messageBody.length;
     switch (true) {
       case length < 10:
-        return new MessageType("small_message", 1);
+        return new MessageType(MessageTypeName.smallMessage, 1);
       case length < 50:
-        return new MessageType("medium_message", 2);
+        return new MessageType(MessageTypeName.mediumMessage, 2);
       default:
-        return new MessageType("large_message", 10);
+        return new MessageType(MessageTypeName.largeMessage, 10);
     }
   }
 

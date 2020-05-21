@@ -1,5 +1,5 @@
 import LowBalanceError from "./LowBalanceError.js";
-import { IUserable } from "./interfaces";
+import IUserable from "../interfaces/IUserable";
 
 class User implements IUserable {
   protected _id: string;
@@ -8,21 +8,21 @@ class User implements IUserable {
     this._id = userId;
     this._balance = 0;
   }
-  getId() {
+  public getId(): string {
     return this._id;
   }
-  getBalance() {
+  public getBalance(): number {
     return this._balance;
   }
 
-  withdraw(money: number) {
+  public withdraw(money: number): void {
     if (money > this._balance) {
       throw new LowBalanceError("User has low balance");
     }
     this._balance -= money;
   }
 
-  payment(money: number) {
+  public payment(money: number): void {
     if (money > 0) this._balance += money;
   }
 }

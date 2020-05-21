@@ -1,4 +1,4 @@
-import { IListable } from "./interfaces";
+import IListable from "../interfaces/IListable";
 
 class List<T extends { getId(): string | number }> implements IListable<T> {
   private list: T[] = [];

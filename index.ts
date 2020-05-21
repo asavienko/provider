@@ -1,9 +1,9 @@
-import User from "./Classes/User.js";
-import Message from "./Classes/Message.js";
-import Provider from "./Classes/Provider.js";
-import { IMessagable, IUserable } from "./Classes/interfaces";
-import List from "./Classes/List.js";
-import { MessageTypeName } from "./Classes/constants.js";
+import User from "./src/classes/User.js";
+import Message from "./src/classes/Message.js";
+import Provider from "./src/classes/Provider.js";
+import List from "./src/classes/List.js";
+import IMessagable from "./src/interfaces/IMessagable";
+import IUserable from "./src/interfaces/IUserable";
 
 const user1 = new User("Bob");
 console.log(user1);
@@ -46,5 +46,3 @@ console.log(provider.getUserBalance("Bob"));
 console.log(provider.getMessageList());
 console.log(provider.getUserList());
 console.log(provider.getUserBalance("Bob"));
-
-console.log(MessageTypeName[0]);
