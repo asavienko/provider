@@ -2,8 +2,8 @@ import LowBalanceError from "./LowBalanceError.js";
 import IUserable from "../interfaces/IUserable";
 
 class User implements IUserable {
-  protected _id: string;
-  protected _balance: number;
+  private _id: string;
+  private _balance: number;
   constructor(userId: string) {
     this._id = userId;
     this._balance = 0;

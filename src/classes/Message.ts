@@ -2,11 +2,11 @@ import IMessagable from "../interfaces/IMessagable";
 import IMessageTypable from "../interfaces/IMessageTypable";
 
 class Message implements IMessagable {
-  protected _id: number;
-  protected _creator: string;
-  protected _receiver: string;
-  protected _body: string;
-  protected _type: IMessageTypable;
+  private _id: number;
+  private _creator: string;
+  private _receiver: string;
+  private _body: string;
+  private _type: IMessageTypable;
 
   constructor(creator: string, receiver: string, body: string) {
     this._id = Message.getNextId();

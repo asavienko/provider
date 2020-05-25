@@ -2,8 +2,8 @@ import { MessageTypeName } from "../constants/MessageTypeName";
 import IMessageTypable from "../interfaces/IMessageTypable";
 
 class MessageType implements IMessageTypable {
-  protected _name: MessageTypeName;
-  protected _price: number;
+  private _name: MessageTypeName;
+  private _price: number;
   constructor(name: MessageTypeName, price: number) {
     this._name = name;
     this._price = price;
